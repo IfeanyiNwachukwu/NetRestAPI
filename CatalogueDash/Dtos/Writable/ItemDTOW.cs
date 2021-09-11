@@ -1,0 +1,4 @@
+namespace CatalogueDash.Dtos.Writable
+{
+    
+}
