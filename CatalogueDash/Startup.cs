@@ -13,6 +13,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using AutoMapper;
+using MongoDB.Driver;
+using CatalogueDash.Settings;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace CatalogueDash
 {
@@ -28,8 +33,16 @@ namespace CatalogueDash
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+            BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
+            services.AddSingleton<IMongoClient>(serviceProvider =>
+            {
+                var Settings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+                return new MongoClient(Settings.ConnectionString);
+            });
             services.AddAutoMapper(typeof(Startup));
-            services.AddSingleton<IItemsRepository,InMemItemsRepository>();
+             services.AddSingleton<IItemsRepository,MongoDbItemsRepository>();
+            // services.AddSingleton<IItemsRepository,InMemItemsRepository>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
