@@ -43,7 +43,10 @@ namespace CatalogueDash
             services.AddAutoMapper(typeof(Startup));
              services.AddSingleton<IItemsRepository,MongoDbItemsRepository>();
             // services.AddSingleton<IItemsRepository,InMemItemsRepository>();
-            services.AddControllers();
+            services.AddControllers(options => 
+            {
+                options.SuppressAsyncSuffixInActionNames = false;
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CatalogueDash", Version = "v1" });

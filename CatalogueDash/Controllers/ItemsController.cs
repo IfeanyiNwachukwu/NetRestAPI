@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using AutoMapper;
 using CatalogueDash.Dtos.Readable;
 using CatalogueDash.Dtos.Writable;
@@ -23,16 +24,16 @@ namespace CatalogueDash.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
         [HttpGet]
-        public ActionResult<ItemDTO> GetItems()
+        public async Task<ActionResult<ItemDTO>> GetItemsAsync()
         {
-            var items = _repository.GetItems();
+            var items = await _repository.GetItemsAsync();
             var itemsToReturn = _mapper.Map<IEnumerable<ItemDTO>>(items);
             return Ok(itemsToReturn);
         }
         [HttpGet("{id}")]
-        public ActionResult<ItemDTO> GetItem(Guid id)
+        public async Task<ActionResult<ItemDTO>> GetItemAsync(Guid id)
         {
-            var item = _repository.GetItem(id);
+            var item = await _repository.GetItemAsync(id);
             if(item is null)
             {
                 return NotFound();
@@ -42,7 +43,7 @@ namespace CatalogueDash.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ItemDTO> CreateItem(ItemDTOW model)
+        public async  Task<ActionResult<ItemDTO>> CreateItemAsync(ItemDTOW model)
         {
             Item item = new()
             {
@@ -52,16 +53,16 @@ namespace CatalogueDash.Controllers
                 CreatedDate = DateTimeOffset.UtcNow
             };
 
-            _repository.CreateItem(item);
+            await _repository.CreateItemAsync(item);
 
-            return CreatedAtAction(nameof(GetItem), new {id = item.Id},item.AsDto());
+            return CreatedAtAction(nameof(GetItemAsync), new {id = item.Id},item.AsDto());
 
          }
 
         [HttpPut("{id}")]
-        public ActionResult UpdateItem(Guid id, ItemDTOW model)
+        public async Task<ActionResult> UpdateItemAsync(Guid id, ItemDTOW model)
          {
-             var existingItem = _repository.GetItem(id);
+             var existingItem = await _repository.GetItemAsync(id);
              if(existingItem is null)
              {
                  return NotFound();
@@ -72,19 +73,19 @@ namespace CatalogueDash.Controllers
                  Name = model.Name,
                  Price = model.Price
              };
-             _repository.UpdateItem(updatedItem);
+             await _repository.UpdateItemAsync(updatedItem);
              return NoContent();
          }
 
          [HttpDelete("{id}")]
-         public ActionResult DeleteItem(Guid id)
+         public async Task<ActionResult> DeleteItemAsync(Guid id)
          {
-              var existingItem = _repository.GetItem(id);
+              var existingItem = await _repository.GetItemAsync(id);
              if(existingItem is null)
              {
                  return NotFound();
              }
-             _repository.DeleteItem(id);
+             await _repository.DeleteItemAsync(id);
              return NoContent();
          }
     }
