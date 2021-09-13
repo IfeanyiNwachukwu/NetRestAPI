@@ -58,7 +58,7 @@ namespace CatalogueDash.Controllers
 
          }
 
-         [HttpPut]
+        [HttpPut("{id}")]
         public ActionResult UpdateItem(Guid id, ItemDTOW model)
          {
              var existingItem = _repository.GetItem(id);
@@ -76,7 +76,7 @@ namespace CatalogueDash.Controllers
              return NoContent();
          }
 
-         [HttpDelete]
+         [HttpDelete("{id}")]
          public ActionResult DeleteItem(Guid id)
          {
               var existingItem = _repository.GetItem(id);
