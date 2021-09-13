@@ -14,3 +14,5 @@
 
 -- dotnet user-secrets init
 -- dotnet user-secrets set MongoDbSettings:Password /secretPassword/
+
+--dotnet add package AspNetCore.HealthChecks.MongoDb
