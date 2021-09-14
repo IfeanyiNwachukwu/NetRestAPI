@@ -16,3 +16,9 @@
 -- dotnet user-secrets set MongoDbSettings:Password /secretPassword/
 
 --dotnet add package AspNetCore.HealthChecks.MongoDb
+
+--ctrl Shift P Add docker files to work space
+
+-- docker build -t catalogueDash/catalogueDash.:v1 . //Build docker image
+
+docker build -t cataloguedash:v1
