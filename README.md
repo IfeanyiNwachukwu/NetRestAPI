@@ -44,3 +44,13 @@ PUSHING IMAGES TO DOCKER HUB
 Run images locally that has been pushed
 --  docker run -it --rm -p 8000:80 -e MongoDbSettings:Host=mongo -e MongoDbSettings:Password=pass#word1 --network=CatalogueBroadcaster wisdomnwachukwu/cataloguedash:v1
 
+Orchestrating with Kubernetes
+-- Kubectl config current-context
+--  kubectl create secret generic catalogue-secrets --from-literal=mongodb-password='pass#word1'
+
+-- cd .\kubernetes\ //changing directory to the yaml directory
+--  kubectl apply -f .\catalogue.yaml
+-- kubectl get deployments // gets a list of all created deployments
+-- kubectl get pods  // checkout running pods
+-- kubectl logs /Name of pod/
+
