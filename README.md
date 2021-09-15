@@ -50,7 +50,9 @@ Orchestrating with Kubernetes
 
 -- cd .\kubernetes\ //changing directory to the yaml directory
 --  kubectl apply -f .\catalogue.yaml
+-- kubectl apply -f .\mongodb.yaml
 -- kubectl get deployments // gets a list of all created deployments
 -- kubectl get pods  // checkout running pods
 -- kubectl logs /Name of pod/
+--  kubectl get statefulsets
 
