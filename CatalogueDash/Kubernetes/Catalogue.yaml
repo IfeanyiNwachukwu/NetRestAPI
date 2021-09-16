@@ -13,7 +13,7 @@ spec:
     spec:
       containers: 
       - name: cataloguedash
-        image: wisdomnwachukwu/cataloguedash:v1
+        image: wisdomnwachukwu/cataloguedash:v5
         resources:
           limits:
             memory: "128Mi"

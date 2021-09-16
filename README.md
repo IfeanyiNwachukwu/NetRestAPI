@@ -55,4 +55,20 @@ Orchestrating with Kubernetes
 -- kubectl get pods  // checkout running pods
 -- kubectl logs /Name of pod/
 --  kubectl get statefulsets
+-- kubectl get pods -w // Allows for watching changes across the existing pods
+-- kubectl scale deployments/cataloguedash-deployment --replicas=3 // Scaling deployment
+After code changes
+-- docker build -t wisdomnwachukwu/cataloguedash:v2 .
+-- docker login
+-- docker push wisdomnwachukwu/cataloguedash:v2
+-- kubectl apply -f  ./catalogue.yaml
+
+UNIT TESTS
+-- dotnet add reference ..\CatalogueDash\CatalogueDash.csproj
+-- dotnet add package Microsoft.Extensions.Logging.Abstractions
+-- dotnet add package moq
+-- dotnet test
+-- dotnet add package FluentAssertions
+
+
 
